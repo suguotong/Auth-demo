@@ -6,6 +6,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.Date;
@@ -31,6 +32,7 @@ public class UserEntity {
      */
     private String password;
 
+    // 角色
     private Integer roleId;
     /**
      * token 登陆凭证
@@ -45,15 +47,28 @@ public class UserEntity {
      */
     private LocalDateTime loginTime;
 
+
     private String birthday;
 
     private String address;
 
+    // 地址
     private String telephone;
 
     private LocalDateTime createTime;
 
+    // 中心id
+    private Integer centerId;
+
+    // 经销商名称
     private String jxs;
 
-    private String jxsId;
+    // 经销商Id
+    private Integer jxsId;
+
+    // 积分
+    private BigDecimal score;
+
+    // 成交额
+    private BigDecimal money;
 }

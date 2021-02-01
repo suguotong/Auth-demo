@@ -8,12 +8,15 @@ import javax.persistence.Id;
 
 @Data
 @Entity
-public class CategoryEntity {
+public class ProductModelEntity {
+
     /**
      * ID
      */
     @Id
     @GeneratedValue
     private Integer id;
-    private String categoryName;
+    private Integer productId;
+    private String productName;
+    private String model;
 }
