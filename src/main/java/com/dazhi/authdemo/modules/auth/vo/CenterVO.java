@@ -11,7 +11,7 @@ public class CenterVO implements Serializable {
 
     public CenterVO() {}
 
-    public CenterVO(Integer centerId, String centerName, Integer jxsNum, Integer hsrNum, Integer orderNum) {
+    public CenterVO(String centerId, String centerName, String jxsNum, String hsrNum, String orderNum) {
         this.centerId = centerId;
         this.centerName = centerName;
         this.jxsNum = jxsNum;
@@ -20,14 +20,14 @@ public class CenterVO implements Serializable {
     }
 
     // 中心id
-    private Integer centerId;
+    private String centerId;
     // 中心 名称
     private String centerName;
     // 经销商 数量
-    private Integer jxsNum;
+    private String jxsNum;
     // 合伙人数量
-    private Integer hsrNum;
+    private String hsrNum;
     // 带单数量
-    private Integer orderNum;
+    private String orderNum;
 
 }

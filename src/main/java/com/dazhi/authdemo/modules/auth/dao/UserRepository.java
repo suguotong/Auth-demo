@@ -13,5 +13,5 @@ public interface UserRepository extends JpaRepository<UserEntity, Integer> {
     UserEntity findByToken(String token);
 
     @Query(value="SELECT center_id as centerId ,center_name as centerName ,count(center_id) as jxsNum from user_entity WHERE  role_id =2 GROUP BY center_id,center_name" ,nativeQuery = true)
-    List<Object> getCenterList();
+    List<Object[]> getCenterList();
 }

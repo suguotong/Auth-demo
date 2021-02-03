@@ -6,6 +6,7 @@ import com.dazhi.authdemo.modules.auth.dao.UserRepository;
 import com.dazhi.authdemo.modules.auth.entity.UserEntity;
 import com.dazhi.authdemo.modules.auth.service.AuthService;
 import com.dazhi.authdemo.modules.auth.vo.CenterVO;
+import io.swagger.models.auth.In;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
@@ -56,36 +57,37 @@ public class AuthServiceImpl implements AuthService {
         return userInfo;
     }
 
+
     @Override
     public List<CenterVO> getCenterList() {
         List<CenterVO> centerVOList = new ArrayList<>();
-        List<Object> list= userRepository.getCenterList();
-        for (Object i : list){
+        List<Object[]> list = userRepository.getCenterList();
+        for (int i = 1; i < list.size(); i++) {
             CenterVO vo = new CenterVO();
+            Object[] objects = list.get(i);
+            vo.setCenterId((objects[0].toString()));
+            vo.setCenterName((objects[1].toString()));
+            vo.setJxsNum((objects[2].toString()));
+            centerVOList.add(vo);
         }
-        try {
-//             centerVOList = castEntity(list, CenterVO.class);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        String ss="fdas";
+
         return centerVOList;
     }
 
     //转换实体类
-    private  <T> List<T> castEntity(List<Object[]> list, Class<T> clazz) throws Exception {
+    private <T> List<T> castEntity(List<Object[]> list, Class<T> clazz) throws Exception {
         List<T> returnList = new ArrayList<T>();
-        if(CollectionUtils.isEmpty(list)){
+        if (CollectionUtils.isEmpty(list)) {
             return returnList;
         }
         Object[] co = list.get(0);
         Class[] c2 = new Class[co.length];
         //确定构造方法
         for (int i = 0; i < co.length; i++) {
-            if(co[i]!=null){
+            if (co[i] != null) {
                 c2[i] = co[i].getClass();
-            }else {
-                c2[i]=String.class;
+            } else {
+                c2[i] = String.class;
             }
         }
         for (Object[] o : list) {
