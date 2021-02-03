@@ -60,6 +60,8 @@ public class UserEntity {
     // 中心id
     private Integer centerId;
 
+    private String centerName;
+
     // 经销商名称
     private String jxs;
 

@@ -4,7 +4,6 @@ package com.dazhi.authdemo.modules.auth.service.impl;
 import com.dazhi.authdemo.modules.auth.dao.UserRepository;
 import com.dazhi.authdemo.modules.auth.entity.UserEntity;
 import com.dazhi.authdemo.modules.auth.service.AuthService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;

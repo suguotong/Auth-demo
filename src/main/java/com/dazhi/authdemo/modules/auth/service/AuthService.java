@@ -1,6 +1,7 @@
 package com.dazhi.authdemo.modules.auth.service;
 
 
+import com.dazhi.authdemo.modules.auth.dto.DealDTO;
 import com.dazhi.authdemo.modules.auth.entity.UserEntity;
 
 public interface AuthService {
@@ -33,4 +34,5 @@ public interface AuthService {
      * @return
      */
     UserEntity findByToken(String token);
+
 }
