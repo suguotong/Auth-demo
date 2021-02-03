@@ -10,6 +10,7 @@ import com.dazhi.authdemo.modules.auth.entity.ProductModelEntity;
 import com.dazhi.authdemo.modules.auth.entity.UserEntity;
 import com.dazhi.authdemo.modules.auth.service.AuthService;
 import com.dazhi.authdemo.modules.auth.service.ProductService;
+import com.dazhi.authdemo.modules.auth.vo.CenterVO;
 import com.dazhi.authdemo.modules.auth.vo.TokenVO;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.validation.BindingResult;
@@ -108,6 +109,7 @@ public class AuthController   {
         return Result.ok(allByProductId);
     }
 
+    // 保存订单
     @PostMapping("/saveDeal")
     public Result saveDeal( @RequestBody  DealDTO dealDTO) {
         String msg = productService.saveDeal(dealDTO);
@@ -116,6 +118,13 @@ public class AuthController   {
         }else {
             return Result.build(500,msg);
         }
+    }
+
+    // 中心查询（所有中心）
+    @PostMapping("/getCenterList")
+    public Result getCenterList() {
+        List<CenterVO> allCenter = authService.getCenterList();
+        return Result.ok(allCenter);
     }
 
     /**

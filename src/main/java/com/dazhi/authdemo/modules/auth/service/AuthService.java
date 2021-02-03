@@ -3,6 +3,9 @@ package com.dazhi.authdemo.modules.auth.service;
 
 import com.dazhi.authdemo.modules.auth.dto.DealDTO;
 import com.dazhi.authdemo.modules.auth.entity.UserEntity;
+import com.dazhi.authdemo.modules.auth.vo.CenterVO;
+
+import java.util.List;
 
 public interface AuthService {
 
@@ -21,6 +24,8 @@ public interface AuthService {
     String createToken(UserEntity user);
 
     UserEntity regester(UserEntity user);
+
+    List<CenterVO> getCenterList();
 
     /**
      * 根据token去修改用户token ，使原本token失效

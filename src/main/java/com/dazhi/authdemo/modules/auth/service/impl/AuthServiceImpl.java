@@ -1,12 +1,18 @@
 package com.dazhi.authdemo.modules.auth.service.impl;
 
 
+import com.alibaba.fastjson.JSON;
 import com.dazhi.authdemo.modules.auth.dao.UserRepository;
 import com.dazhi.authdemo.modules.auth.entity.UserEntity;
 import com.dazhi.authdemo.modules.auth.service.AuthService;
+import com.dazhi.authdemo.modules.auth.vo.CenterVO;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
+import java.lang.reflect.Constructor;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -48,6 +54,45 @@ public class AuthServiceImpl implements AuthService {
     public UserEntity regester(UserEntity user) {
         UserEntity userInfo = userRepository.save(user);
         return userInfo;
+    }
+
+    @Override
+    public List<CenterVO> getCenterList() {
+        List<CenterVO> centerVOList = new ArrayList<>();
+        List<Object> list= userRepository.getCenterList();
+        for (Object i : list){
+            CenterVO vo = new CenterVO();
+        }
+        try {
+//             centerVOList = castEntity(list, CenterVO.class);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        String ss="fdas";
+        return centerVOList;
+    }
+
+    //转换实体类
+    private  <T> List<T> castEntity(List<Object[]> list, Class<T> clazz) throws Exception {
+        List<T> returnList = new ArrayList<T>();
+        if(CollectionUtils.isEmpty(list)){
+            return returnList;
+        }
+        Object[] co = list.get(0);
+        Class[] c2 = new Class[co.length];
+        //确定构造方法
+        for (int i = 0; i < co.length; i++) {
+            if(co[i]!=null){
+                c2[i] = co[i].getClass();
+            }else {
+                c2[i]=String.class;
+            }
+        }
+        for (Object[] o : list) {
+            Constructor<T> constructor = clazz.getConstructor(c2);
+            returnList.add(constructor.newInstance(o));
+        }
+        return returnList;
     }
 
     @Override

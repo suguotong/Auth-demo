@@ -73,4 +73,12 @@ public class UserEntity {
 
     // 成交额
     private BigDecimal money;
+
+
+    // 经销商 数量
+    private Integer jxsNum;
+    // 合伙人数量
+    private Integer hsrNum;
+    // 带单数量
+    private Integer orderNum;
 }
