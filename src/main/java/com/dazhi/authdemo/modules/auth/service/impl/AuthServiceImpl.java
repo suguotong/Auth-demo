@@ -114,7 +114,7 @@ public class AuthServiceImpl implements AuthService {
     @Override
     public List<CenterVO> getHhrList(CenterVO centerVO) {
         List<CenterVO> centerVOList = new ArrayList<>();
-        List<Object[]> list = userRepository.getHhrList(centerVO.getJsxAccount());
+        List<Object[]> list = userRepository.getHhrList(centerVO.getJsxAccount(),centerVO.getUserName());
         for (int i = 0; i < list.size(); i++) {
             CenterVO vo = new CenterVO();
             Object[] objects = list.get(i);

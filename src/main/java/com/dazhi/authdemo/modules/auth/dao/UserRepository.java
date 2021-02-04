@@ -21,6 +21,6 @@ public interface UserRepository extends JpaRepository<UserEntity, Integer> {
     @Query(value="SELECT center_id,center_name,account,jxs FROM user_entity WHERE if(?1 !='',center_id=?1,1=1) and role_id =2 and if(?2 !='',account like %?2%,1=1)" ,nativeQuery = true)
     List<Object[]> getJxsList(String center_id,String account);
 
-    @Query(value="SELECT center_id,center_name,jxs_id,jxs,account,telephone,create_time,username FROM user_entity WHERE if(?1 !='',jxs_id=?1,1=1) and role_id =3 " ,nativeQuery = true)
-    List<Object[]> getHhrList(String jxs_id);
+    @Query(value="SELECT center_id,center_name,jxs_id,jxs,account,telephone,create_time,username FROM user_entity WHERE if(?1 !='',jxs_id=?1,1=1) and role_id =3  and if(?2 !='',username like %?2%,1=1)" ,nativeQuery = true)
+    List<Object[]> getHhrList(String jxs_id,String username);
 }
