@@ -21,7 +21,7 @@ public class DealEntity {
     // 中心id
     private Integer centerId;
     // 经销商id
-    private Integer jsxAccountId;
+    private Long jsxAccountId;
     // 三工合伙人id
     private Integer sgAccountId;
 

@@ -7,6 +7,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.Date;
@@ -66,7 +67,7 @@ public class UserEntity {
     private String jxs;
 
     // 经销商Id
-    private Integer jxsId;
+    private Long jxsId;
 
     // 积分
     private BigDecimal score;
@@ -76,9 +77,9 @@ public class UserEntity {
 
 
     // 经销商 数量
-    private Integer jxsNum;
+    private BigInteger jxsNum;
     // 合伙人数量
-    private Integer hsrNum;
+    private BigInteger hsrNum;
     // 带单数量
-    private Integer orderNum;
+    private BigInteger orderNum;
 }

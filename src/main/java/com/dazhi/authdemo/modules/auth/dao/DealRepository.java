@@ -1,8 +1,12 @@
 package com.dazhi.authdemo.modules.auth.dao;
 
 import com.dazhi.authdemo.modules.auth.entity.DealEntity;
+import com.dazhi.authdemo.modules.auth.entity.UserEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface DealRepository extends JpaRepository<DealEntity, Integer> {
+import java.math.BigInteger;
+import java.util.List;
 
+public interface DealRepository extends JpaRepository<DealEntity, Integer> {
+    List<DealEntity>  findAllByCenterId(Integer centerId);
 }
