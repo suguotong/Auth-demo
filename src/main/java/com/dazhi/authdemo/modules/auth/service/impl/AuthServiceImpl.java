@@ -1,12 +1,12 @@
 package com.dazhi.authdemo.modules.auth.service.impl;
 
 
-import com.alibaba.fastjson.JSON;
+import com.dazhi.authdemo.common.utils.EntityUtils;
 import com.dazhi.authdemo.modules.auth.dao.UserRepository;
 import com.dazhi.authdemo.modules.auth.entity.UserEntity;
 import com.dazhi.authdemo.modules.auth.service.AuthService;
 import com.dazhi.authdemo.modules.auth.vo.CenterVO;
-import io.swagger.models.auth.In;
+import com.dazhi.authdemo.modules.auth.vo.CenterVOSS;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
@@ -15,6 +15,8 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+
+import static org.reflections.Reflections.log;
 
 @Service
 public class AuthServiceImpl implements AuthService {
@@ -59,17 +61,25 @@ public class AuthServiceImpl implements AuthService {
 
 
     @Override
-    public List<CenterVO> getCenterList() {
+    public List<CenterVO> getCenterList(CenterVO centerVO) {
         List<CenterVO> centerVOList = new ArrayList<>();
-        List<Object[]> list = userRepository.getCenterList();
-        for (int i = 1; i < list.size(); i++) {
+        List<Object[]> list = userRepository.getCenterList(centerVO.getCenterId());
+        for (int i = 0; i < list.size(); i++) {
             CenterVO vo = new CenterVO();
             Object[] objects = list.get(i);
-            vo.setCenterId((objects[0].toString()));
-            vo.setCenterName((objects[1].toString()));
-            vo.setJxsNum((objects[2].toString()));
-            centerVOList.add(vo);
+            if(objects[0]!=null){
+                vo.setCenterId((objects[0].toString()));
+                vo.setCenterName((objects[1].toString()));
+                vo.setJxsNum((objects[2].toString()));
+                centerVOList.add(vo);
+            }
+
         }
+
+//        List<Object[]> objects = userRepository.getCenterList();
+//        List<CenterVOSS> countOfMonthForms = EntityUtils.castEntity(objects, CenterVOSS.class, new CenterVOSS());
+//        log.info("countOfMonthForms = {}",countOfMonthForms);
+
 
         return centerVOList;
     }

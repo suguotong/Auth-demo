@@ -25,7 +25,7 @@ public interface AuthService {
 
     UserEntity regester(UserEntity user);
 
-    List<CenterVO> getCenterList();
+    List<CenterVO> getCenterList(CenterVO centerVO);
 
     /**
      * 根据token去修改用户token ，使原本token失效

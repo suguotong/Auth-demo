@@ -122,8 +122,8 @@ public class AuthController   {
 
     // 中心查询（所有中心）
     @PostMapping("/getCenterList")
-    public Result getCenterList() {
-        List<CenterVO> allCenter = authService.getCenterList();
+    public Result getCenterList(@RequestBody CenterVO centerVO) {
+        List<CenterVO> allCenter = authService.getCenterList(centerVO);
         return Result.ok(allCenter);
     }
 
