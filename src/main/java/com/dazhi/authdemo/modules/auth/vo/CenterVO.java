@@ -23,6 +23,10 @@ public class CenterVO implements Serializable {
     private String centerId;
     // 中心 名称
     private String centerName;
+    // 经销商 88码
+    private String jsxAccount;
+    // 经销商name
+    private String jsxName;
     // 经销商 数量
     private String jxsNum;
     // 合伙人数量

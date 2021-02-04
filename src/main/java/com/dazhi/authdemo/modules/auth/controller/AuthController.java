@@ -127,6 +127,13 @@ public class AuthController   {
         return Result.ok(allCenter);
     }
 
+    // 查询中心的经销商
+    @PostMapping("/getJxsList")
+    public Result getJxsList(@RequestBody CenterVO centerVO) {
+        List<CenterVO> allCenter = authService.getJxsList(centerVO);
+        return Result.ok(allCenter);
+    }
+
     /**
      * 测试
      *

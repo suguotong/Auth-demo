@@ -78,13 +78,29 @@ public class AuthServiceImpl implements AuthService {
             }
 
         }
+        return centerVOList;
+    }
 
+    @Override
+    public List<CenterVO> getJxsList(CenterVO centerVO) {
+        List<CenterVO> centerVOList = new ArrayList<>();
+        List<Object[]> list = userRepository.getJxsList(centerVO.getCenterId());
+        for (int i = 0; i < list.size(); i++) {
+            CenterVO vo = new CenterVO();
+            Object[] objects = list.get(i);
+            if (objects[0] != null) {
+                vo.setCenterId(objects[0].toString());
+                vo.setCenterName(objects[1].toString());
+                vo.setJsxAccount(objects[2].toString());
+                vo.setJsxName(objects[3].toString());
+                List<UserEntity> hsrNum = userRepository.findAllByRoleIdAndJxsId(3, Long.parseLong(objects[2].toString()));
+                vo.setHsrNum("" + hsrNum.size());
+                List<DealEntity> orderNum = dealRepository.findAllByCenterId((Integer) objects[0]);
+                vo.setOrderNum("" + orderNum.size());
+                centerVOList.add(vo);
+            }
 
-//        List<Object[]> objects = userRepository.getCenterList();
-//        List<CenterVOSS> countOfMonthForms = EntityUtils.castEntity(objects, CenterVOSS.class, new CenterVOSS());
-//        log.info("countOfMonthForms = {}",countOfMonthForms);
-
-
+        }
         return centerVOList;
     }
 
