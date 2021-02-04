@@ -85,7 +85,7 @@ public class AuthServiceImpl implements AuthService {
     @Override
     public List<CenterVO> getJxsList(CenterVO centerVO) {
         List<CenterVO> centerVOList = new ArrayList<>();
-        List<Object[]> list = userRepository.getJxsList(centerVO.getCenterId());
+        List<Object[]> list = userRepository.getJxsList(centerVO.getCenterId(),centerVO.getJsxAccount());
         for (int i = 0; i < list.size(); i++) {
             CenterVO vo = new CenterVO();
             Object[] objects = list.get(i);
