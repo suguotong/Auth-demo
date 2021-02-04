@@ -9,6 +9,7 @@ import com.dazhi.authdemo.modules.auth.service.AuthService;
 import com.dazhi.authdemo.modules.auth.vo.CenterVO;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -95,8 +96,14 @@ public class AuthServiceImpl implements AuthService {
                 vo.setJsxName(objects[3].toString());
                 List<UserEntity> hsrNum = userRepository.findAllByRoleIdAndJxsId(3, Long.parseLong(objects[2].toString()));
                 vo.setHsrNum("" + hsrNum.size());
-                List<DealEntity> orderNum = dealRepository.findAllByCenterId((Integer) objects[0]);
+                List<DealEntity> orderNum = dealRepository.findAllByJsxAccountId(Long.parseLong(objects[2].toString()));
                 vo.setOrderNum("" + orderNum.size());
+                BigDecimal score = new BigDecimal("0");
+                for (int j = 0; j < orderNum.size(); j++) {
+                    BigDecimal m = orderNum.get(j).getPrice().multiply(new BigDecimal(orderNum.get(j).getNumber()));
+                    score = score.add(m);
+                }
+                vo.setScore(score.toString());
                 centerVOList.add(vo);
             }
 

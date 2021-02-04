@@ -33,5 +33,7 @@ public class CenterVO implements Serializable {
     private String hsrNum;
     // 带单数量
     private String orderNum;
+    // 积分
+    private String score;
 
 }
