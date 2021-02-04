@@ -112,6 +112,37 @@ public class AuthServiceImpl implements AuthService {
     }
 
     @Override
+    public List<CenterVO> getHhrList(CenterVO centerVO) {
+        List<CenterVO> centerVOList = new ArrayList<>();
+        List<Object[]> list = userRepository.getHhrList(centerVO.getJsxAccount());
+        for (int i = 0; i < list.size(); i++) {
+            CenterVO vo = new CenterVO();
+            Object[] objects = list.get(i);
+            if (objects[0] != null) {
+                vo.setCenterId(objects[0].toString());
+                vo.setCenterName(objects[1].toString());
+                vo.setJsxAccount(objects[2].toString());
+                vo.setJsxName(objects[3].toString());
+                vo.setHhrAccount(objects[4].toString());
+                vo.setTelephone(objects[5].toString());
+                vo.setTime(objects[6].toString());
+                vo.setUserName(objects[7].toString());
+                List<DealEntity> orderNum = dealRepository.findAllByJsxAccountId(Long.parseLong(objects[4].toString()));
+                vo.setOrderNum("" + orderNum.size());
+                BigDecimal score = new BigDecimal("0");
+                for (int j = 0; j < orderNum.size(); j++) {
+                    BigDecimal m = orderNum.get(j).getPrice().multiply(new BigDecimal(orderNum.get(j).getNumber()));
+                    score = score.add(m);
+                }
+                vo.setScore(score.toString());
+                centerVOList.add(vo);
+            }
+
+        }
+        return centerVOList;
+    }
+
+    @Override
     public void logout(String token) {
         UserEntity userEntity = userRepository.findByToken(token);
         //用UUID生成token

@@ -32,6 +32,7 @@ public class InterceptorConfig implements WebMvcConfigurer {
         patterns.add("/login");
         patterns.add("/getCenterList");
         patterns.add("/getJxsList");
+        patterns.add("/getHhrList");
 
         registry.addInterceptor(authInterceptor()).addPathPatterns("/**").excludePathPatterns(patterns);
     }

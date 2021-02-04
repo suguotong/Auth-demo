@@ -35,5 +35,11 @@ public class CenterVO implements Serializable {
     private String orderNum;
     // 积分
     private String score;
+    // 合伙人账号
+    private String hhrAccount;
+    // 用户姓名
+    private String userName;
+    private String telephone;
+    private String time;
 
 }

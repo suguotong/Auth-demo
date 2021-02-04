@@ -29,6 +29,8 @@ public interface AuthService {
 
     List<CenterVO> getJxsList(CenterVO centerVO);
 
+    List<CenterVO> getHhrList(CenterVO centerVO);
+
     /**
      * 根据token去修改用户token ，使原本token失效
      * @param token

@@ -134,6 +134,13 @@ public class AuthController   {
         return Result.ok(allCenter);
     }
 
+    // 查询合伙人列表
+    @PostMapping("/getHhrList")
+    public Result getHhrList(@RequestBody CenterVO centerVO) {
+        List<CenterVO> allCenter = authService.getHhrList(centerVO);
+        return Result.ok(allCenter);
+    }
+
     /**
      * 测试
      *
