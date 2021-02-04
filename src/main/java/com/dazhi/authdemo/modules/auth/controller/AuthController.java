@@ -141,7 +141,16 @@ public class AuthController   {
         return Result.ok(allCenter);
     }
 
-    // 经销商查询
+    // 合伙人查询(经销商)
+    @PostMapping("/getJHhrList")
+    public Result getJHhrList(@RequestBody CenterVO centerVO,HttpServletRequest request) {
+        //从request中取出token
+        String token = TokenUtil.getRequestToken(request);
+        UserEntity user = authService.findByToken(token);
+        centerVO.setJsxAccount(user.getAccount());
+        List<CenterVO> allCenter = authService.getHhrList(centerVO);
+        return Result.ok(allCenter);
+    }
 
 
     /**
