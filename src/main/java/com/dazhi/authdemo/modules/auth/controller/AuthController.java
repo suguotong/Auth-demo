@@ -120,26 +120,29 @@ public class AuthController   {
         }
     }
 
-    // 中心查询（所有中心）
+    // 中心查询（中心）
     @PostMapping("/getCenterList")
     public Result getCenterList(@RequestBody CenterVO centerVO) {
         List<CenterVO> allCenter = authService.getCenterList(centerVO);
         return Result.ok(allCenter);
     }
 
-    // 查询中心的经销商
+    // 查询中心的经销商（中心）
     @PostMapping("/getJxsList")
     public Result getJxsList(@RequestBody CenterVO centerVO) {
         List<CenterVO> allCenter = authService.getJxsList(centerVO);
         return Result.ok(allCenter);
     }
 
-    // 查询合伙人列表
+    // 查询合伙人列表(中心)
     @PostMapping("/getHhrList")
     public Result getHhrList(@RequestBody CenterVO centerVO) {
         List<CenterVO> allCenter = authService.getHhrList(centerVO);
         return Result.ok(allCenter);
     }
+
+    // 经销商查询
+
 
     /**
      * 测试

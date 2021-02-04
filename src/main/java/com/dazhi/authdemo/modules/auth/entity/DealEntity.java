@@ -36,4 +36,6 @@ public class DealEntity {
     private String telephone;
     private String address;
 
+    private Integer status;
+
 }

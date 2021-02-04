@@ -7,11 +7,14 @@ import com.dazhi.authdemo.modules.auth.entity.DealEntity;
 import com.dazhi.authdemo.modules.auth.entity.UserEntity;
 import com.dazhi.authdemo.modules.auth.service.AuthService;
 import com.dazhi.authdemo.modules.auth.vo.CenterVO;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -96,7 +99,7 @@ public class AuthServiceImpl implements AuthService {
                 vo.setJsxName(objects[3].toString());
                 List<UserEntity> hsrNum = userRepository.findAllByRoleIdAndJxsId(3, Long.parseLong(objects[2].toString()));
                 vo.setHsrNum("" + hsrNum.size());
-                List<DealEntity> orderNum = dealRepository.findAllByJsxAccountId(Long.parseLong(objects[2].toString()));
+                List<DealEntity> orderNum = dealRepository.findAllByJsxAccountIdAndStatus(Long.parseLong(objects[2].toString()),1);
                 vo.setOrderNum("" + orderNum.size());
                 BigDecimal score = new BigDecimal("0");
                 for (int j = 0; j < orderNum.size(); j++) {
@@ -125,9 +128,16 @@ public class AuthServiceImpl implements AuthService {
                 vo.setJsxName(objects[3].toString());
                 vo.setHhrAccount(objects[4].toString());
                 vo.setTelephone(objects[5].toString());
-                vo.setTime(objects[6].toString());
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                if (!StringUtils.isEmpty(objects[6].toString())){
+                    try {
+                        vo.setTime(sdf.format(sdf.parse(objects[6].toString())));
+                    }catch (Exception e){
+
+                    }
+                }
                 vo.setUserName(objects[7].toString());
-                List<DealEntity> orderNum = dealRepository.findAllByJsxAccountId(Long.parseLong(objects[4].toString()));
+                List<DealEntity> orderNum = dealRepository.findAllByJsxAccountIdAndStatus(Long.parseLong(objects[2].toString()),1);
                 vo.setOrderNum("" + orderNum.size());
                 BigDecimal score = new BigDecimal("0");
                 for (int j = 0; j < orderNum.size(); j++) {

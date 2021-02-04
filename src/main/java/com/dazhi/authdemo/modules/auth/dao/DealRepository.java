@@ -9,5 +9,5 @@ import java.util.List;
 
 public interface DealRepository extends JpaRepository<DealEntity, Integer> {
     List<DealEntity>  findAllByCenterId(Integer centerId);
-    List<DealEntity>  findAllByJsxAccountId(Long  jsxAccountId);
+    List<DealEntity>  findAllByJsxAccountIdAndStatus(Long  jsxAccountId,Integer status);
 }

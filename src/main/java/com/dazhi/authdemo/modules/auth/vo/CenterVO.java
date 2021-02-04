@@ -44,4 +44,7 @@ public class CenterVO implements Serializable {
     // 时间
     private String time;
 
+    // 状态 0 未审核 1 已审核 2 未审核
+    private String status;
+
 }
