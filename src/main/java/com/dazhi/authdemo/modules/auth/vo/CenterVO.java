@@ -44,6 +44,11 @@ public class CenterVO implements Serializable {
     // 时间
     private String time;
 
+    // 地址
+    private String address;
+    // 密码
+    private String password;
+
     // 状态 0 未审核 1 已审核 2 未审核
     private String status;
 
