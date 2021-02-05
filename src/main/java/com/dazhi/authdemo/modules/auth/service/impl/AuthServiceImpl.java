@@ -153,6 +153,12 @@ public class AuthServiceImpl implements AuthService {
     }
 
     @Override
+    public List<DealEntity> getDealBySgId(CenterVO centerVO) {
+        List<DealEntity> list =  dealRepository.findAllBySgAccountId(Long.parseLong(centerVO.getHhrAccount()));
+        return list;
+    }
+
+    @Override
     public void logout(String token) {
         UserEntity userEntity = userRepository.findByToken(token);
         //用UUID生成token

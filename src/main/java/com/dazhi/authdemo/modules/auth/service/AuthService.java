@@ -2,6 +2,7 @@ package com.dazhi.authdemo.modules.auth.service;
 
 
 import com.dazhi.authdemo.modules.auth.dto.DealDTO;
+import com.dazhi.authdemo.modules.auth.entity.DealEntity;
 import com.dazhi.authdemo.modules.auth.entity.UserEntity;
 import com.dazhi.authdemo.modules.auth.vo.CenterVO;
 
@@ -30,6 +31,8 @@ public interface AuthService {
     List<CenterVO> getJxsList(CenterVO centerVO);
 
     List<CenterVO> getHhrList(CenterVO centerVO);
+
+    List<DealEntity> getDealBySgId(CenterVO centerVO);
 
     /**
      * 根据token去修改用户token ，使原本token失效

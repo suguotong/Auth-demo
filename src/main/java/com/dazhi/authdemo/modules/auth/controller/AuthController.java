@@ -5,6 +5,7 @@ import com.dazhi.authdemo.common.utils.TokenUtil;
 import com.dazhi.authdemo.modules.auth.dao.ProductModelRepository;
 import com.dazhi.authdemo.modules.auth.dto.DealDTO;
 import com.dazhi.authdemo.modules.auth.dto.LoginDTO;
+import com.dazhi.authdemo.modules.auth.entity.DealEntity;
 import com.dazhi.authdemo.modules.auth.entity.ProductEntity;
 import com.dazhi.authdemo.modules.auth.entity.ProductModelEntity;
 import com.dazhi.authdemo.modules.auth.entity.UserEntity;
@@ -150,6 +151,13 @@ public class AuthController   {
         centerVO.setJsxAccount(user.getAccount());
         List<CenterVO> allCenter = authService.getHhrList(centerVO);
         return Result.ok(allCenter);
+    }
+
+    // 合伙人成交单列表查询(经销商)
+    @PostMapping("/getJDealList")
+    public Result getJDealList(@RequestBody CenterVO centerVO) {
+        List<DealEntity> list = authService.getDealBySgId(centerVO);
+        return Result.ok(list);
     }
 
 
