@@ -11,6 +11,7 @@ import com.dazhi.authdemo.modules.auth.entity.ProductModelEntity;
 import com.dazhi.authdemo.modules.auth.service.ProductService;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -47,6 +48,7 @@ public class ProductServiceImpl implements ProductService {
                 dto.setProductModel(productDTO.getProductModel());
                 dto.setNumber(productDTO.getNumber());
                 dto.setPrice(productDTO.getPrice());
+                dto.setTime(new Date());
                 dealRepository.save(dto);
             }
             return "";
