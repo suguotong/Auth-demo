@@ -160,6 +160,22 @@ public class AuthController   {
         return Result.ok(list);
     }
 
+    // 审核
+    @PostMapping("/checkDeal")
+    public Result checkDeal(@RequestBody CenterVO centerVO) {
+        authService.checkDeal(centerVO);
+        return Result.ok("审核成功！");
+    }
+//
+//    @PostMapping("/saveDeal")
+//    public Result saveDeal(@RequestBody CenterVO centerVO,HttpServletRequest request) {
+//        //从request中取出token
+//        String token = TokenUtil.getRequestToken(request);
+//        UserEntity user = authService.findByToken(token);
+////        centerVO.set(user.getAccount());
+//        authService.checkDeal(centerVO);
+//        return Result.ok("审核成功！");
+//    }
 
     /**
      * 测试

@@ -34,6 +34,9 @@ public interface AuthService {
 
     List<DealEntity> getDealBySgId(CenterVO centerVO);
 
+    void checkDeal(CenterVO centerVO);
+
+
     /**
      * 根据token去修改用户token ，使原本token失效
      * @param token

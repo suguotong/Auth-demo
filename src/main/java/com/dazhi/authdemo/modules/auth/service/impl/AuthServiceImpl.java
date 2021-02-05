@@ -154,8 +154,16 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     public List<DealEntity> getDealBySgId(CenterVO centerVO) {
+        Long ss = Long.parseLong(centerVO.getHhrAccount());
         List<DealEntity> list =  dealRepository.findAllBySgAccountId(Long.parseLong(centerVO.getHhrAccount()));
         return list;
+    }
+
+    @Override
+    public void checkDeal(CenterVO centerVO) {
+         DealEntity dealEntity = dealRepository.getOne(centerVO.getDealId());
+         dealEntity.setStatus(Integer.parseInt(centerVO.getStatus()));
+         dealRepository.save(dealEntity);
     }
 
     @Override
@@ -168,6 +176,8 @@ public class AuthServiceImpl implements AuthService {
         userRepository.save(userEntity);
 
     }
+
+
 
     @Override
     public UserEntity findByToken(String token) {

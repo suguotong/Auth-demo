@@ -51,5 +51,7 @@ public class CenterVO implements Serializable {
 
     // 状态 0 未审核 1 已审核 2 未审核
     private String status;
+    // 成交单id
+    private Integer dealId;
 
 }

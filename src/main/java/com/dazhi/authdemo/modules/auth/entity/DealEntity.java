@@ -23,7 +23,7 @@ public class DealEntity {
     // 经销商id
     private Long jsxAccountId;
     // 三工合伙人id
-    private Integer sgAccountId;
+    private Long sgAccountId;
 
     // 产品
     private String productName;
