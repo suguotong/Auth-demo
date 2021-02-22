@@ -18,4 +18,7 @@ public class LoginDTO {
 
     @NotNull(message = "角色不能为空")
     private Integer roleId;
+
+    private String oldPwd;
+    private String token;
 }

@@ -8,11 +8,11 @@ public class DealDTO {
     // 中心id
     private Integer centerId;
     // 经销商id
-    private Integer jsxAccountId;
+    private Long jsxAccountId;
     // 三工合伙人id
-    private Integer sgAccountId;
+    private String sgAccountId;
 
-    private List<ProductDTO> listPro;
+    private List<ProductDTO> productList;
 
     // 客户
     private String customerName;

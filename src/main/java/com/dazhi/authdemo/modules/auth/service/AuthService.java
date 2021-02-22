@@ -2,6 +2,7 @@ package com.dazhi.authdemo.modules.auth.service;
 
 
 import com.dazhi.authdemo.modules.auth.dto.DealDTO;
+import com.dazhi.authdemo.modules.auth.dto.LoginDTO;
 import com.dazhi.authdemo.modules.auth.entity.DealEntity;
 import com.dazhi.authdemo.modules.auth.entity.UserEntity;
 import com.dazhi.authdemo.modules.auth.vo.CenterVO;
@@ -34,7 +35,15 @@ public interface AuthService {
 
     List<DealEntity> getDealBySgId(CenterVO centerVO);
 
+    List<DealEntity> getWSHbyJxsId(CenterVO centerVO);
+
+    List<DealEntity> getDealList(CenterVO centerVO);
+
     void checkDeal(CenterVO centerVO);
+
+    DealEntity getDealById(CenterVO centerVO);
+
+    UserEntity dhScore(CenterVO centerVO,String token);
 
 
     /**
@@ -43,11 +52,20 @@ public interface AuthService {
      */
     void logout(String token);
 
+    String xgMima(LoginDTO loginDTO);
+
     /**
      * 根据token获取用户信息
      * @param token
      * @return
      */
     UserEntity findByToken(String token);
+
+    /**
+     * 根据经销商Id获取经销商信息
+     * @param jsxId
+     * @return
+     */
+    UserEntity findByAccountAndRoleId(String account);
 
 }

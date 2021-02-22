@@ -1,30 +1,13 @@
-package com.dazhi.authdemo.modules.auth.entity;
+package com.dazhi.authdemo.modules.auth.dto;
 
 import lombok.Data;
-
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.util.Date;
 
-/**
- * 验证码实体类
- */
 @Data
-@Entity
-public class UserEntity {
-    /**
-     * ID
-     */
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+public class RegeDto {
     /**
      * username 用户名
      */
@@ -75,8 +58,6 @@ public class UserEntity {
     // 积分
     private BigDecimal score;
 
-    private BigDecimal syScore;
-
     // 成交额
     private BigDecimal money;
 
@@ -87,6 +68,4 @@ public class UserEntity {
     private BigInteger hsrNum;
     // 带单数量
     private BigInteger orderNum;
-
-    private Integer xingJi;
 }

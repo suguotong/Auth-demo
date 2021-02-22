@@ -3,6 +3,7 @@ package com.dazhi.authdemo.modules.auth.service.impl;
 
 import com.dazhi.authdemo.modules.auth.dao.DealRepository;
 import com.dazhi.authdemo.modules.auth.dao.UserRepository;
+import com.dazhi.authdemo.modules.auth.dto.LoginDTO;
 import com.dazhi.authdemo.modules.auth.entity.DealEntity;
 import com.dazhi.authdemo.modules.auth.entity.UserEntity;
 import com.dazhi.authdemo.modules.auth.service.AuthService;
@@ -58,6 +59,8 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     public UserEntity regester(UserEntity user) {
+        user.setScore(BigDecimal.ZERO);
+        user.setSyScore(BigDecimal.ZERO);
         UserEntity userInfo = userRepository.save(user);
         return userInfo;
     }
@@ -66,7 +69,7 @@ public class AuthServiceImpl implements AuthService {
     @Override
     public List<CenterVO> getCenterList(CenterVO centerVO) {
         List<CenterVO> centerVOList = new ArrayList<>();
-        List<Object[]> list = userRepository.getCenterList(centerVO.getCenterId());
+        List<Object[]> list = userRepository.getCenterList(centerVO.getCenterName());
         for (int i = 0; i < list.size(); i++) {
             CenterVO vo = new CenterVO();
             Object[] objects = list.get(i);
@@ -76,7 +79,7 @@ public class AuthServiceImpl implements AuthService {
                 vo.setJxsNum((objects[2].toString()));
                 List<UserEntity> hsrNum = userRepository.findAllByRoleIdAndCenterId(3, (Integer) objects[0]);
                 vo.setHsrNum("" + hsrNum.size());
-                List<DealEntity> orderNum = dealRepository.findAllByCenterId((Integer) objects[0]);
+                List<DealEntity> orderNum = dealRepository.findAllByCenterIdAndStatus((Integer) objects[0],1);
                 vo.setOrderNum("" + orderNum.size());
                 centerVOList.add(vo);
             }
@@ -88,7 +91,7 @@ public class AuthServiceImpl implements AuthService {
     @Override
     public List<CenterVO> getJxsList(CenterVO centerVO) {
         List<CenterVO> centerVOList = new ArrayList<>();
-        List<Object[]> list = userRepository.getJxsList(centerVO.getCenterId(),centerVO.getJsxAccount());
+        List<Object[]> list = userRepository.getJxsList(centerVO.getCenterId(), centerVO.getJsxAccount());
         for (int i = 0; i < list.size(); i++) {
             CenterVO vo = new CenterVO();
             Object[] objects = list.get(i);
@@ -99,7 +102,7 @@ public class AuthServiceImpl implements AuthService {
                 vo.setJsxName(objects[3].toString());
                 List<UserEntity> hsrNum = userRepository.findAllByRoleIdAndJxsId(3, Long.parseLong(objects[2].toString()));
                 vo.setHsrNum("" + hsrNum.size());
-                List<DealEntity> orderNum = dealRepository.findAllByJsxAccountIdAndStatus(Long.parseLong(objects[2].toString()),1);
+                List<DealEntity> orderNum = dealRepository.findAllByJsxAccountIdAndStatus(Long.parseLong(objects[2].toString()), 1);
                 vo.setOrderNum("" + orderNum.size());
                 BigDecimal score = new BigDecimal("0");
                 for (int j = 0; j < orderNum.size(); j++) {
@@ -117,7 +120,7 @@ public class AuthServiceImpl implements AuthService {
     @Override
     public List<CenterVO> getHhrList(CenterVO centerVO) {
         List<CenterVO> centerVOList = new ArrayList<>();
-        List<Object[]> list = userRepository.getHhrList(centerVO.getJsxAccount(),centerVO.getUserName());
+        List<Object[]> list = userRepository.getHhrList(centerVO.getJsxAccount(), centerVO.getUserName());
         for (int i = 0; i < list.size(); i++) {
             CenterVO vo = new CenterVO();
             Object[] objects = list.get(i);
@@ -127,17 +130,27 @@ public class AuthServiceImpl implements AuthService {
                 vo.setJsxAccount(objects[2].toString());
                 vo.setJsxName(objects[3].toString());
                 vo.setHhrAccount(objects[4].toString());
-                vo.setTelephone(objects[5].toString());
+                if(objects[5]!=null){
+                    vo.setTelephone(objects[5].toString());
+                }else {
+                    vo.setTelephone(objects[4].toString());
+                }
+
                 SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-                if (!StringUtils.isEmpty(objects[6].toString())){
+                if (objects[6]!=null) {
                     try {
                         vo.setTime(sdf.format(sdf.parse(objects[6].toString())));
-                    }catch (Exception e){
+                    } catch (Exception e) {
 
                     }
                 }
-                vo.setUserName(objects[7].toString());
-                List<DealEntity> orderNum = dealRepository.findAllByJsxAccountIdAndStatus(Long.parseLong(objects[2].toString()),1);
+                if(objects[7]!=null){
+                    vo.setUserName(objects[7].toString());
+                }else {
+                    vo.setUserName(objects[4].toString());
+                }
+
+                List<DealEntity> orderNum = dealRepository.findAllByJsxAccountIdAndStatus(Long.parseLong(objects[2].toString()), 1);
                 vo.setOrderNum("" + orderNum.size());
                 BigDecimal score = new BigDecimal("0");
                 for (int j = 0; j < orderNum.size(); j++) {
@@ -154,16 +167,84 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     public List<DealEntity> getDealBySgId(CenterVO centerVO) {
-        Long ss = Long.parseLong(centerVO.getHhrAccount());
-        List<DealEntity> list =  dealRepository.findAllBySgAccountId(Long.parseLong(centerVO.getHhrAccount()));
+        List<DealEntity> list = new ArrayList<>();
+        if (StringUtils.isEmpty(centerVO.getProductName())) {
+            list = dealRepository.findAllBySgAccountIdAndStatus(Long.parseLong(centerVO.getHhrAccount()),1);
+        } else {
+            list = dealRepository.findAllBySgAccountIdAndStatusAndProductNameContains(Long.parseLong(centerVO.getHhrAccount()),  1,centerVO.getProductName());
+        }
+
         return list;
     }
 
     @Override
+    public List<DealEntity> getWSHbyJxsId(CenterVO centerVO) {
+        List<DealEntity> list = new ArrayList<>();
+        list = dealRepository.findAllByJsxAccountIdAndStatus(Long.parseLong(centerVO.getJsxAccount()),0);
+        return list;
+    }
+
+    @Override
+    public List<DealEntity> getDealList(CenterVO centerVO) {
+        List<DealEntity> list = new ArrayList<>();
+        if (StringUtils.isEmpty(centerVO.getProductName())) {
+            list = dealRepository.findAllBySgAccountId(Long.parseLong(centerVO.getHhrAccount()));
+        } else {
+            list = dealRepository.findAllBySgAccountIdAndProductNameLike(Long.parseLong(centerVO.getHhrAccount()), centerVO.getProductName());
+        }
+
+        return list;
+    }
+
+    @Override
+    public DealEntity getDealById(CenterVO centerVO){
+        DealEntity dealEntity = dealRepository.getOne(centerVO.getDealId());
+        return dealEntity;
+    }
+
+    @Override
     public void checkDeal(CenterVO centerVO) {
-         DealEntity dealEntity = dealRepository.getOne(centerVO.getDealId());
-         dealEntity.setStatus(Integer.parseInt(centerVO.getStatus()));
-         dealRepository.save(dealEntity);
+        DealEntity dealEntity = dealRepository.getOne(centerVO.getDealId());
+        dealEntity.setStatus(Integer.parseInt(centerVO.getStatus()));
+        if(centerVO.getStatus().equals("1")){
+            UserEntity byAccount = userRepository.findByAccount(dealEntity.getSgAccountId().toString());
+            BigDecimal num = new BigDecimal(dealEntity.getNumber() == null ? 0 : dealEntity.getNumber());
+            BigDecimal newAddScore = new BigDecimal(String.valueOf(num.multiply(dealEntity.getPrice() == null ? new BigDecimal("0") : dealEntity.getPrice())));
+            BigDecimal oldScore = new BigDecimal("0");
+            BigDecimal oldSyScore = new BigDecimal("0");
+            if (byAccount.getScore() != null) {
+                oldScore = byAccount.getScore();
+            }
+            if (byAccount.getSyScore() != null) {
+                oldSyScore = byAccount.getSyScore();
+            }
+            BigDecimal bignum3 = null;
+            BigDecimal syScore = null ;
+            bignum3 = oldScore.add(newAddScore);
+            syScore = oldSyScore.add(newAddScore);
+            byAccount.setScore(bignum3);
+            byAccount.setSyScore(syScore);
+            userRepository.save(byAccount);
+        }
+        dealRepository.save(dealEntity);
+
+    }
+
+    @Override
+    public UserEntity dhScore(CenterVO centerVO,String token) {
+        UserEntity byAccount = userRepository.findByToken(token);
+        BigDecimal oldScore = new BigDecimal("0");
+        if (byAccount.getScore() != null) {
+            oldScore = byAccount.getSyScore();
+        }
+        BigDecimal bignum3 = null;
+        if (oldScore.compareTo(new BigDecimal(centerVO.getScore())) < 0) {
+            return null;
+        }
+        bignum3 = oldScore.subtract(new BigDecimal(centerVO.getScore()));
+        byAccount.setSyScore(bignum3);
+        userRepository.save(byAccount);
+        return byAccount;
     }
 
     @Override
@@ -177,10 +258,54 @@ public class AuthServiceImpl implements AuthService {
 
     }
 
+    @Override
+    public String xgMima(LoginDTO loginDTO) {
+        UserEntity userEntity = userRepository.findByToken(loginDTO.getToken());
+        if(!userEntity.getPassword().equals(loginDTO.getOldPwd())){
+            return "0";
+        }
+        userEntity.setPassword(loginDTO.getPassword());
+        userRepository.save(userEntity);
+        return "1";
+    }
 
 
     @Override
     public UserEntity findByToken(String token) {
-        return userRepository.findByToken(token);
+        //            NO	星级	对应积分
+//            1	一星级	5000-20000
+//            2	二星级	20000-50000
+//            3	三星级	50000-80000
+//            4	四星级	80000-100000
+//            5	五星级	100000
+        UserEntity byToken = userRepository.findByToken(token);
+        int   jifen = 0;
+        if(byToken.getScore()==null){
+            jifen = 0;
+            byToken.setScore(BigDecimal.ZERO);
+            byToken.setSyScore(BigDecimal.ZERO);
+        }else {
+            jifen = byToken.getScore().intValue() ;
+        }
+        if (jifen>=100000){
+            byToken.setXingJi(5);
+        }else if(jifen>=80000){
+            byToken.setXingJi(4);
+        }else if(jifen>=50000){
+            byToken.setXingJi(3);
+        }else if(jifen>=20000){
+            byToken.setXingJi(2);
+        }
+        else if(jifen>=5000){
+            byToken.setXingJi(1);
+        }else {
+            byToken.setXingJi(0);
+        }
+        return byToken;
+    }
+
+    @Override
+    public UserEntity findByAccountAndRoleId(String account) {
+        return userRepository.findByAccountAndRoleId(account, 2);
     }
 }

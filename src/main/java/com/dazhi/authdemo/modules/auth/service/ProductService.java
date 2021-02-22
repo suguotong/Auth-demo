@@ -9,6 +9,6 @@ import java.util.List;
 
 public interface ProductService {
     List<ProductEntity> findAll();
-    List<ProductModelEntity> findAllByProductId(Integer productId);
+    List<ProductModelEntity> findAllByProductId(Integer productId,String model);
     String saveDeal(DealDTO dealDTO);
 }

@@ -32,23 +32,27 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public List<ProductModelEntity> findAllByProductId(Integer productId) {
-        return productModelRepository.findAllByProductId(productId);
+    public List<ProductModelEntity> findAllByProductId(Integer productId,String model) {
+        return productModelRepository.findAllByProductIdAndModelContains(productId,model);
     }
 
     @Override
     public String saveDeal(DealDTO dealDTO){
         try {
-            for (ProductDTO productDTO: dealDTO.getListPro()) {
+            for (ProductDTO productDTO: dealDTO.getProductList()) {
                 DealEntity dto = new DealEntity();
                 dto.setAddress(dealDTO.getAddress());
                 dto.setTelephone(dealDTO.getTelephone());
                 dto.setCustomerName(dealDTO.getCustomerName());
                 dto.setProductName(productDTO.getProductName());
-                dto.setProductModel(productDTO.getProductModel());
+                dto.setProductModel(productDTO.getModel());
                 dto.setNumber(productDTO.getNumber());
                 dto.setPrice(productDTO.getPrice());
                 dto.setTime(new Date());
+                dto.setStatus(0);
+                dto.setCenterId(dealDTO.getCenterId());
+                dto.setJsxAccountId(dealDTO.getJsxAccountId());
+                dto.setSgAccountId(Long.parseLong(dealDTO.getSgAccountId()));
                 dealRepository.save(dto);
             }
             return "";

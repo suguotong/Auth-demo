@@ -54,4 +54,6 @@ public class CenterVO implements Serializable {
     // 成交单id
     private Integer dealId;
 
+    private String ProductName;
+
 }
